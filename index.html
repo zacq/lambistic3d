@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>28 Commandments — A Journey Into Manhood | Andrew Kibe</title>
+  <meta name="description" content="28 laws engineered to rebuild a man from the inside out. By Andrew Kibe.">
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════
+       LOADING SCREEN
+       ══════════════════════════════════════════════════ -->
+  <div id="loader" class="loader">
+    <div class="loader-inner">
+      <div class="loader-title">28 Commandments</div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loader-bar"></div>
+      </div>
+      <div class="loader-pct" id="loader-pct">0%</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       NAVBAR
+       ══════════════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">28<span>C</span></div>
+      <div class="nav-links">
+        <a href="#commandments">The 28</a>
+        <a href="#author">Author</a>
+        <a href="#cta" class="nav-cta">Get the Book</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════
+       HERO — SCROLL ANIMATION ZONE 1
+       Book: closed → opening → layered explosion
+       520vh tall sticky canvas
+       ══════════════════════════════════════════════════ -->
+  <div class="scroll-zone" id="hero-zone">
+    <div class="sticky-viewport" id="hero-sticky">
+
+      <canvas id="hero-canvas"></canvas>
+
+      <!-- Left-anchored headline -->
+      <div class="hero-content" id="hero-content">
+        <div class="hero-eyebrow" id="hero-eyebrow">Andrew Kibe</div>
+        <h1 class="hero-headline">
+          <span class="line num">28</span>
+          <span class="line word">Command<br>ments</span>
+        </h1>
+        <p class="hero-sub" id="hero-sub">A Journey Into Manhood</p>
+      </div>
+
+      <!-- Bottom-center CTA — appears mid-scroll -->
+      <div class="hero-cta-wrap" id="hero-cta-wrap">
+        <p class="hero-cta-label">The system is open.</p>
+        <a href="#cta" class="btn-primary">Claim Your Copy</a>
+      </div>
+
+      <!-- Scroll nudge — visible at top -->
+      <div class="hero-scroll-hint" id="hero-scroll-hint">
+        <span>Scroll to explore</span>
+        <div class="scroll-line"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       MANIFESTO — static text break
+       ══════════════════════════════════════════════════ -->
+  <section class="manifesto" id="manifesto">
+    <div class="manifesto-inner">
+
+      <div class="manifesto-line" data-reveal>
+        <span class="manifesto-dash">—</span>
+        <p>This is not inspiration.</p>
+      </div>
+
+      <div class="manifesto-line" data-reveal>
+        <span class="manifesto-dash">—</span>
+        <p>It's <em>architecture.</em></p>
+      </div>
+
+      <div class="manifesto-line" data-reveal>
+        <span class="manifesto-dash">—</span>
+        <p>28 laws engineered to rebuild a man from the inside out.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       EXPLOSION — SCROLL ANIMATION ZONE 2
+       Book: shattering → orbiting fragments
+       460vh tall sticky canvas
+       ══════════════════════════════════════════════════ -->
+  <div class="scroll-zone" id="explosion-zone">
+    <div class="sticky-viewport" id="explosion-sticky">
+
+      <canvas id="explosion-canvas"></canvas>
+
+      <!-- Right-anchored copy -->
+      <div class="explosion-content">
+        <div class="explosion-text" id="explosion-text">
+          <span class="explosion-headline">28 Laws.</span>
+          <span class="explosion-headline accent">One Direction.</span>
+          <p class="explosion-sub">
+            Zero compromise.<br>
+            Zero confusion.<br>
+            Only clarity.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       COMMANDMENTS PREVIEW
+       ══════════════════════════════════════════════════ -->
+  <section class="commandments-section" id="commandments">
+    <div class="section-inner">
+
+      <div class="section-label" data-reveal>What's Inside</div>
+      <h2 class="section-title" data-reveal>Selected Commandments</h2>
+
+      <div class="commandments-grid">
+
+        <div class="commandment-card" data-reveal-card>
+          <span class="cmd-num">01</span>
+          <h3>Own Your Story</h3>
+          <p>No man builds on borrowed ground. Your past is your foundation — claim it or lose everything built on top of it.</p>
+        </div>
+
+        <div class="commandment-card" data-reveal-card>
+          <span class="cmd-num">07</span>
+          <h3>Master Your Silence</h3>
+          <p>Power doesn't announce itself. The loudest man in the room is rarely the most dangerous — or the most respected.</p>
+        </div>
+
+        <div class="commandment-card" data-reveal-card>
+          <span class="cmd-num">12</span>
+          <h3>Protect Your Energy</h3>
+          <p>What you allow is what will continue. Guard your time and attention with the precision of a professional.</p>
+        </div>
+
+        <div class="commandment-card" data-reveal-card>
+          <span class="cmd-num">16</span>
+          <h3>Lead Without Permission</h3>
+          <p>Waiting for someone to hand you authority is how boys think. Men build it — one decision at a time.</p>
+        </div>
+
+        <div class="commandment-card" data-reveal-card>
+          <span class="cmd-num">21</span>
+          <h3>Choose Discipline Over Desire</h3>
+          <p>Every version of you that you respect made a choice the weaker version refused to make. That's the whole gap.</p>
+        </div>
+
+        <div class="commandment-card" data-reveal-card>
+          <span class="cmd-num">28</span>
+          <h3>Become the Standard</h3>
+          <p>Don't aspire to meet the bar. Set it. Be what the men around you have never witnessed before.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       AUTHOR
+       ══════════════════════════════════════════════════ -->
+  <section class="author-section" id="author">
+    <div class="author-inner">
+      <div class="author-text">
+        <div class="section-label" data-reveal>The Author</div>
+        <h2 class="author-name" data-reveal>Andrew Kibe</h2>
+        <p class="author-bio" data-reveal>
+          Media personality. Provocateur. Unapologetically direct. Andrew Kibe has spent years cutting through noise to deliver the raw, uncomfortable truths men need — but rarely hear.
+        </p>
+        <p class="author-bio" data-reveal>
+          This is not a book written from comfort. It's a system forged from experience, failure, reinvention, and absolute conviction. 28 Commandments is his most complete and uncompromising work yet.
+        </p>
+        <div data-reveal>
+          <a href="#cta" class="btn-secondary">Read His Words</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       FINAL CTA
+       ══════════════════════════════════════════════════ -->
+  <section class="final-cta" id="cta">
+    <div class="cta-inner">
+      <div class="cta-eyebrow" data-reveal>Limited Edition</div>
+      <h2 class="cta-title" data-reveal>Your Copy.<br>Your Standard.</h2>
+      <p class="cta-sub" data-reveal>
+        The next edition won't wait for you.<br>
+        Neither will the men who are already reading.
+      </p>
+      <div class="cta-buttons" data-reveal>
+        <a href="#" class="btn-primary btn-large">Get the Book Now</a>
+        <a href="#commandments" class="btn-ghost">Explore the 28</a>
+      </div>
+      <div class="cta-meta" data-reveal>
+        <span>By Andrew Kibe</span>
+        <span class="dot">·</span>
+        <span>Hardcover</span>
+        <span class="dot">·</span>
+        <span>28 Chapters</span>
+      </div>
+    </div>
+    <div class="cta-bg-glow"></div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       FOOTER
+       ══════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">28C</div>
+      <p>&copy; 2025 Andrew Kibe. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/frame-scrubber.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
