@@ -202,6 +202,38 @@ canvas {
   display: block;
 }
 
+/* ── Hero: top gradient — keeps title text legible over bright book frames ── */
+#hero-sticky::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 260px;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 5, 5, 0.72) 0%,
+    rgba(5, 5, 5, 0.30) 55%,
+    transparent 100%
+  );
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ── Explosion: bottom gradient — keeps text legible over lit amber frames ── */
+#explosion-sticky::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 240px;
+  background: linear-gradient(
+    to top,
+    rgba(5, 5, 5, 0.85) 0%,
+    rgba(5, 5, 5, 0.40) 50%,
+    transparent 100%
+  );
+  z-index: 5;
+  pointer-events: none;
+}
+
 /* ══════════════════════════════════════════════════════════════════════════════
    HERO OVERLAYS
    ══════════════════════════════════════════════════════════════════════════════ */
@@ -351,6 +383,7 @@ canvas {
   align-items: center;
   justify-content: center;
   padding: 14px 40px;
+  min-height: 44px; /* WCAG 2.5.5 touch target */
   background: linear-gradient(135deg, var(--amber) 0%, var(--amber-bright) 100%);
   color: #0a0806;
   font-family: var(--font);
@@ -361,6 +394,7 @@ canvas {
   border-radius: 3px;
   border: none;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   box-shadow: 0 0 32px rgba(200, 135, 42, 0.35), 0 2px 8px rgba(0,0,0,0.5);
   transition: box-shadow 0.3s var(--ease), transform 0.2s var(--ease);
   position: relative;
@@ -392,6 +426,7 @@ canvas {
   display: inline-flex;
   align-items: center;
   padding: 12px 28px;
+  min-height: 44px;
   border: 1px solid var(--border);
   border-radius: 3px;
   color: var(--amber);
@@ -400,6 +435,7 @@ canvas {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
   transition: border-color 0.25s, background 0.25s, color 0.25s;
 }
 
@@ -413,12 +449,14 @@ canvas {
   display: inline-flex;
   align-items: center;
   padding: 18px 32px;
+  min-height: 44px;
   color: var(--text-muted);
   font-family: var(--font);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
   transition: color 0.2s;
 }
 
@@ -821,10 +859,139 @@ canvas {
    RESPONSIVE
    ══════════════════════════════════════════════════════════════════════════════ */
 
+/* ══════════════════════════════════════════════════════════════════════════════
+   HAMBURGER BUTTON
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--text);
+  border-radius: 1px;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  transform-origin: center;
+}
+
+/* Animate to X when active */
+.nav-hamburger.active span:nth-child(1) {
+  transform: translateY(3.75px) rotate(45deg);
+}
+.nav-hamburger.active span:nth-child(2) {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   MOBILE NAV OVERLAY
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.nav-mobile {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(5, 5, 5, 0.97);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease);
+}
+
+.nav-mobile.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.nav-mobile-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.nav-mobile-close:hover { color: var(--text); }
+
+.nav-mobile-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.nav-mobile-links a {
+  font-size: clamp(32px, 9vw, 48px);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.2s;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-mobile-links a:last-child { color: var(--amber); }
+.nav-mobile-links a:hover { color: var(--amber-bright); }
+
 /* ── Tablet landscape / small desktop ──────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .commandments-grid  { grid-template-columns: repeat(2, 1fr); }
-  .explosion-content  { display: none; }
+  .commandments-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Reposition explosion copy to bottom-center of canvas instead of hiding */
+  .explosion-content {
+    right: 0;
+    left: 0;
+    top: auto;
+    bottom: 0;
+    transform: none;
+    text-align: center;
+    max-width: none;
+    padding: 0 32px 40px;
+  }
+
+  .explosion-text {
+    transform: translateY(16px); /* slide up on reveal instead of from right */
+  }
+
+  .explosion-text.visible {
+    transform: translateY(0);
+  }
+
+  .explosion-headline { font-size: clamp(30px, 5.5vw, 56px); }
+  .explosion-headline.accent { margin-bottom: 16px; }
+  .explosion-sub { font-size: 12px; line-height: 1.7; }
 }
 
 /* ── Tablet portrait ────────────────────────────────────────────────────────── */
@@ -835,62 +1002,71 @@ canvas {
     padding: 0 max(20px, env(safe-area-inset-left));
     padding-right: max(20px, env(safe-area-inset-right));
   }
-  .nav-links a:not(.nav-cta) { display: none; }
+  /* Hide all desktop nav links, show hamburger instead */
+  .nav-links        { display: none; }
+  .nav-hamburger    { display: flex; }
+  .nav-mobile       { display: flex; }
 
-  /* Scroll zones — less scrolling on mobile */
+  /* Scroll zones */
   #hero-zone      { height: 420vh; }
   #explosion-zone { height: 380vh; }
 
-  /* Hero text — center-aligned on mobile, clear of book */
+  /* ── Hero: centre text at top, clear of the book image ── */
   .hero-content {
+    position: absolute;
     left: 0;
     right: 0;
-    top: auto;
-    bottom: auto;
-    /* Stack at top of viewport, centered, above the book image */
-    position: absolute;
-    top: 72px; /* below navbar */
-    transform: none;
+    top: 68px;          /* sits just below the 56px navbar */
+    transform: none;    /* JS mqMobile check keeps this clear of translateY(-50%) */
     text-align: center;
-    padding: 0 24px;
+    padding: 0 28px;
     max-width: none;
+    /* Subtle vignette so text always pops over any book frame */
+    text-shadow: 0 2px 20px rgba(0,0,0,0.6);
   }
+
+  .hero-eyebrow  { margin-bottom: 12px; }
 
   .hero-headline {
-    font-size: clamp(44px, 14vw, 80px);
+    font-size: clamp(42px, 13vw, 76px);
     align-items: center;
+    margin-bottom: 14px;
   }
+
+  .hero-sub { font-size: 11px; letter-spacing: 0.18em; }
 
   .hero-cta-wrap {
-    bottom: 7%;
-    width: auto;
+    bottom: 8%;
     max-width: calc(100vw - 48px);
-    left: 50%;
-    transform: translateX(-50%);
   }
 
+  .hero-cta-label  { font-size: 9px; margin-bottom: 16px; }
   .hero-scroll-hint { bottom: 20px; }
 
-  /* Manifesto */
-  .manifesto { padding: 80px 24px; }
+  /* ── Manifesto ── */
+  .manifesto       { padding: 80px 24px; }
   .manifesto-inner { gap: 36px; }
   .manifesto-line p { font-size: clamp(22px, 6.5vw, 40px); }
 
-  /* Commandments */
+  /* ── Commandments ── */
   .commandments-section,
-  .author-section { padding: 100px 24px; }
+  .author-section   { padding: 100px 24px; }
   .commandments-grid { grid-template-columns: 1fr; }
   .commandment-card  { padding: 36px 28px; }
+  .section-title     { margin-bottom: 48px; }
 
-  /* Author */
-  .author-inner { max-width: none; }
+  /* ── Author ── */
+  .author-inner  { max-width: none; }
+  .author-bio    { font-size: 14px; }
 
-  /* CTA */
-  .final-cta { padding: 100px 24px 120px; }
+  /* ── CTA ── */
+  .final-cta  { padding: 100px 24px 120px; }
+  .cta-sub    { font-size: 14px; }
   .cta-buttons { flex-direction: column; align-items: center; gap: 8px; }
   .btn-ghost   { padding: 14px 24px; }
+  .btn-primary.btn-large { padding: 16px 44px; }
 
-  /* Footer */
+  /* ── Footer ── */
   .footer { padding: 28px 24px; padding-bottom: max(28px, env(safe-area-inset-bottom)); }
   .footer-inner { flex-direction: column; gap: 10px; text-align: center; }
 }
@@ -898,47 +1074,50 @@ canvas {
 /* ── Mobile portrait ────────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
   #hero-zone      { height: 380vh; }
-  #explosion-zone { height: 350vh; }
+  #explosion-zone { height: 340vh; }
 
-  .hero-content   { top: 64px; padding: 0 20px; }
-  .hero-eyebrow   { letter-spacing: 0.28em; font-size: 9px; }
-  .hero-headline  { font-size: clamp(40px, 16vw, 72px); line-height: 0.86; }
-
-  .hero-cta-wrap  { bottom: 6%; }
-  .hero-cta-label { font-size: 9px; letter-spacing: 0.25em; }
-
+  .hero-content     { top: 62px; padding: 0 20px; }
+  .hero-eyebrow     { letter-spacing: 0.26em; font-size: 9px; }
+  .hero-headline    { font-size: clamp(38px, 15vw, 68px); line-height: 0.86; }
+  .hero-cta-wrap    { bottom: 6%; }
+  .hero-cta-label   { font-size: 9px; letter-spacing: 0.22em; }
   .hero-scroll-hint { bottom: 14px; }
 
-  .manifesto     { padding: 64px 20px; }
-  .manifesto-line { flex-direction: column; gap: 6px; }
+  .manifesto        { padding: 64px 20px; }
+  .manifesto-line   { flex-direction: column; gap: 6px; }
   .manifesto-line p { font-size: clamp(20px, 8vw, 32px); }
 
   .commandments-section,
-  .author-section { padding: 80px 20px; }
-  .commandment-card { padding: 32px 24px; }
+  .author-section   { padding: 80px 20px; }
+  .commandment-card { padding: 32px 22px; }
 
-  .section-title  { margin-bottom: 48px; }
+  .final-cta        { padding: 80px 20px 100px; }
+  .cta-title        { font-size: clamp(42px, 14vw, 76px); }
 
-  .final-cta { padding: 80px 20px 100px; }
-  .cta-title  { font-size: clamp(44px, 14vw, 80px); }
-  .cta-sub    { font-size: 14px; }
-  .btn-primary.btn-large { padding: 16px 36px; font-size: 12px; }
-
-  .footer { padding: 24px 20px; padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+  .footer           { padding: 24px 20px; padding-bottom: max(24px, env(safe-area-inset-bottom)); }
 }
 
-/* ── Very small phones (SE, Galaxy A) ─────────────────────────────────────── */
+/* ── Very small phones (SE, Galaxy A series) ─────────────────────────────── */
 @media (max-width: 375px) {
-  .hero-headline { font-size: clamp(36px, 18vw, 60px); }
+  .hero-content  { top: 58px; }
+  .hero-headline { font-size: clamp(34px, 17vw, 56px); }
   .nav-logo      { font-size: 15px; }
+  .cta-title     { font-size: clamp(38px, 16vw, 64px); }
 }
 
-/* ── Landscape on small phones — book takes full height, hide text overlay ── */
+/* ── Landscape on small phones — tighten zones, hide overlapping overlays ─── */
 @media (max-width: 768px) and (orientation: landscape) and (max-height: 450px) {
-  .hero-content   { display: none; }
-  .hero-cta-wrap  { display: none; }
-  #hero-zone      { height: 300vh; }
-  #explosion-zone { height: 260vh; }
+  .hero-content     { display: none; }
+  .hero-cta-wrap    { display: none; }
+  .hero-scroll-hint { display: none; }
+  #hero-zone        { height: 280vh; }
+  #explosion-zone   { height: 240vh; }
+}
+
+/* ── Tiny screens: cap scroll distance so animation doesn't feel exhausting ── */
+@media (max-width: 360px) {
+  #hero-zone      { height: 340vh; }
+  #explosion-zone { height: 300vh; }
 }
 
 /* ── Touch devices — remove hover states that flash on tap ─────────────────── */

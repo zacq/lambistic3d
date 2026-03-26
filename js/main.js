@@ -24,6 +24,23 @@
   }
 
   // ══════════════════════════════════════════════════════════════════════════════
+  // MOBILE VIEWPORT HEIGHT — must run BEFORE scrubbers so canvas sizes correctly
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  function setVH() {
+    const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    document.documentElement.style.setProperty('--vh', (h * 0.01) + 'px');
+  }
+
+  // Run immediately so --vh is set before FrameScrubber._setupCanvas() reads it
+  setVH();
+
+  window.addEventListener('resize', setVH, { passive: true });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', setVH, { passive: true });
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════════
   // DOM REFS
   // ══════════════════════════════════════════════════════════════════════════════
 
@@ -41,6 +58,9 @@
   // ══════════════════════════════════════════════════════════════════════════════
   // SCRUBBER SETUP
   // ══════════════════════════════════════════════════════════════════════════════
+
+  // Media query — used to toggle mobile-specific behaviour in scroll handler
+  const mqMobile = window.matchMedia('(max-width: 768px)');
 
   const heroFrames  = buildHeroFrames();
   const explFrames  = buildExplosionFrames();
@@ -169,11 +189,17 @@
       const contentFade = p > 0.75 ? Math.max(0, 1 - ((p - 0.75) / 0.2)) : 1;
       heroContent.style.opacity = contentFade;
 
-      // Shift text leftward as book opens (p 0.25 → 0.65)
-      const shift = p > 0.25
-        ? Math.min((p - 0.25) / 0.4, 1) * -40
-        : 0;
-      heroContent.style.transform = `translateY(-50%) translateX(${shift}px)`;
+      if (mqMobile.matches) {
+        // Mobile: CSS controls position (top: Xpx). Clear any JS transform so
+        // the CSS `transform: none` override is not blocked by an inline style.
+        heroContent.style.transform = '';
+      } else {
+        // Desktop: shift text leftward as book opens (p 0.25 → 0.65)
+        const shift = p > 0.25
+          ? Math.min((p - 0.25) / 0.4, 1) * -40
+          : 0;
+        heroContent.style.transform = `translateY(-50%) translateX(${shift}px)`;
+      }
 
       // CTA + scroll hint
       if (p > 0.52 && p < 0.85) {
@@ -207,25 +233,51 @@
     }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════════
-  // MOBILE VIEWPORT HEIGHT FIX
-  // iOS Safari: 100vh includes the browser chrome, causing sticky zones to
-  // overflow. We set --vh to the true inner height instead.
-  // ══════════════════════════════════════════════════════════════════════════════
-
-  function setVH() {
-    // Prefer visualViewport (more accurate on mobile) then innerHeight
-    const h = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
-    document.documentElement.style.setProperty('--vh', (h * 0.01) + 'px');
-  }
-
-  setVH();
-
-  // Update on resize and on visualViewport changes (address bar show/hide)
-  window.addEventListener('resize', setVH, { passive: true });
+  // Also re-size canvases when visual viewport changes (iOS address bar show/hide)
   if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', setVH, { passive: true });
+    window.visualViewport.addEventListener('resize', () => {
+      heroScrubber._setupCanvas();
+      explScrubber._setupCanvas();
+    }, { passive: true });
   }
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // HAMBURGER / MOBILE NAV
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  const hamburger   = document.getElementById('nav-hamburger');
+  const mobileNav   = document.getElementById('nav-mobile');
+  const mobileClose = document.getElementById('nav-mobile-close');
+
+  function openMobileNav() {
+    mobileNav.classList.add('open');
+    mobileNav.setAttribute('aria-hidden', 'false');
+    hamburger.setAttribute('aria-expanded', 'true');
+    hamburger.classList.add('active');
+    // Prevent body scroll while menu is open
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileNav() {
+    mobileNav.classList.remove('open');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', openMobileNav);
+  mobileClose.addEventListener('click', closeMobileNav);
+
+  // Close on any nav link tap
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', closeMobileNav);
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMobileNav();
+  });
 
   // Prevent scroll before page is revealed
   document.body.style.overflow = 'hidden';

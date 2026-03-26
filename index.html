@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>28 Commandments — A Journey Into Manhood | Andrew Kibe</title>
   <meta name="description" content="28 laws engineered to rebuild a man from the inside out. By Andrew Kibe.">
+  <!-- Mobile browser chrome colour -->
+  <meta name="theme-color" content="#050505">
+  <!-- iOS full-screen web app support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="28 Commandments">
 
   <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,8 +45,23 @@
         <a href="#author">Author</a>
         <a href="#cta" class="nav-cta">Get the Book</a>
       </div>
+      <!-- Hamburger — mobile only -->
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile full-screen nav overlay -->
+  <div class="nav-mobile" id="nav-mobile" aria-hidden="true">
+    <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Close menu">&times;</button>
+    <nav class="nav-mobile-links">
+      <a href="#commandments">The 28</a>
+      <a href="#author">Author</a>
+      <a href="#cta">Get the Book</a>
+    </nav>
+  </div>
 
   <!-- ══════════════════════════════════════════════════
        HERO — SCROLL ANIMATION ZONE 1
@@ -57,7 +78,7 @@
         <div class="hero-eyebrow" id="hero-eyebrow">Andrew Kibe</div>
         <h1 class="hero-headline">
           <span class="line num">28</span>
-          <span class="line word">Command<br>ments</span>
+          <span class="line word">Commandments</span>
         </h1>
         <p class="hero-sub" id="hero-sub">A Journey Into Manhood</p>
       </div>
